@@ -10,7 +10,8 @@ from collections import defaultdict
 import re
 import pprint
 
-osm_file = open('../data/Laguna_Hills_CA_map.osm', encoding='utf8')
+#osm_file = open('../data/Laguna_Hills_CA_map.osm', encoding='utf8')
+osm_file = open('../data/sample.osm', encoding='utf8')
 
 
 # add elements to be audited to audit_elem set
@@ -68,7 +69,7 @@ def is_element_to_audit(element, tag):
 def audit(audit_elem):                                                     
     for event, elem in ET.iterparse(osm_file, events=('start',)):
         for element in audit_elem:
-            if elem.tag == 'way':
+            if elem.tag == 'node' or elem.tag == 'way':
                 for tag in elem.iter('tag'):
                     if is_element_to_audit(element, tag):            
                         audit_element_type(element, tag.attrib['v']) 
